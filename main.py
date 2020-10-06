@@ -8,6 +8,8 @@ except ImportError:
 import pytesseract
 pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
 from matplotlib import pyplot as plt
+import argparse
+import os
 
 
 main_loc = [0.45, 0.06, 0.46, 0.10]
@@ -141,7 +143,10 @@ def parse_value(img, loc):
 
 
 if __name__ == '__main__':
-    video_path = '../equip/ipad.mp4'
+    parser = argparse.ArgumentParser()
+    parser.add_argument("video_path")
+    args = parser.parse_args()
+    video_path = os.path.abspath(args.video_path)
     crop_area = find_equip_area(video_path)
     print(crop_area)
     separated = separate_frames(video_path, crop_area)
